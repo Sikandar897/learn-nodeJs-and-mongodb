@@ -89,3 +89,24 @@ app.put('/api/update/:id', (req, res) => {
     })
 
 })
+
+// DELETE API to delete a product
+app.delete('/api/deleteProduct/:id', (req, res) => {
+    let productId = Number(req.params.id);
+    let productToDelete = productData.find(p => p.id === productId);
+
+    if (!productToDelete) {
+        return res.status(404).send({
+            status: 'fail',
+            message: 'Product not found'
+        });
+    }
+
+    let index = productData.indexOf(productToDelete);
+    productData.splice(index, 1); // delete product
+
+    res.status(200).send({
+        status: 'success',
+        message: 'Product deleted successfully'
+    });
+});
